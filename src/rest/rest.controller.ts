@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Query, Body, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Query, Body, NotFoundException, ParseIntPipe, ValidationPipe } from '@nestjs/common';
 import { CreateRestDto } from './dto/create-rest.dto';
 import { UpdateRestDto } from './dto/update-rest.dto';
 import { RestService } from './rest.service';
@@ -7,14 +7,14 @@ import { RestService } from './rest.service';
 export class RestController {
     constructor(private readonly restService:RestService){}
     @Get()
-    getRests(@Query('job') job: 'banker' | 'developer') {
+    getRests(@Query('job') job: 'Coder' | 'Developer' | 'Engineer') {
         return  this.restService.getRests(job);
     }
 
     @Get(':id') 
-    getRest(@Param('id') id: string){
+    getRest(@Param('id', ParseIntPipe) id: number){
         try {
-              return this.restService.getRest(+id);
+              return this.restService.getRest(id);
         } catch (error) {
             throw new NotFoundException();   //more can be found in nestjs documentation
         }
@@ -22,7 +22,7 @@ export class RestController {
     }
 
     @Post()
-    createRest(@Body() createRestDto : CreateRestDto){
+    createRest(@Body(new ValidationPipe()) createRestDto : CreateRestDto){
         return this.restService.createRest(createRestDto);
     }
 

@@ -9,7 +9,7 @@ export class RestService {
         { id: 1, name: 'Raysam', job: 'developer' }
     ]
 
-    getRests(job?: 'banker' | 'developer') {
+    getRests(job?: 'Coder' | 'Developer' | 'Engineer') {
         if (job) {
             return this.restsData.filter((rest) => rest.job === job);
         }
