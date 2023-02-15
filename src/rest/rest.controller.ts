@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Put, Delete, Param, Query, Body, NotFoundException, ParseIntPipe, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Query, Body, NotFoundException, ParseIntPipe, ValidationPipe, UseGuards } from '@nestjs/common';
 import { CreateRestDto } from './dto/create-rest.dto';
 import { UpdateRestDto } from './dto/update-rest.dto';
 import { RestService } from './rest.service';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('rest')
+@UseGuards(AuthGuard)
 export class RestController {
     constructor(private readonly restService:RestService){}
     @Get()
